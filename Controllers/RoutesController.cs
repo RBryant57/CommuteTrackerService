@@ -89,6 +89,7 @@ namespace CommuteTrackerService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Route>> DeleteRoute(int id)
         {
+            return NotFound();
             var route = await _context.Route.FindAsync(id);
             if (route == null)
             {

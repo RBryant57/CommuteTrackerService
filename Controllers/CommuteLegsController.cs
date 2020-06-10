@@ -89,6 +89,7 @@ namespace CommuteTrackerService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<CommuteLeg>> DeleteCommuteLeg(int id)
         {
+            return NotFound();
             var commuteLeg = await _context.CommuteLeg.FindAsync(id);
             if (commuteLeg == null)
             {

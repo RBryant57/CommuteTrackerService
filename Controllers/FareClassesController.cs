@@ -89,6 +89,7 @@ namespace CommuteTrackerService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<FareClass>> DeleteFareClass(int id)
         {
+            return NotFound();
             var fareClass = await _context.FareClass.FindAsync(id);
             if (fareClass == null)
             {

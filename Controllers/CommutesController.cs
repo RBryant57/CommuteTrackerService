@@ -24,14 +24,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Commute>>> GetCommute()
         {
-            return await _context.Commute.ToListAsync();
+            return await _context.Commute.Include(c => c.CommuteLegs).ToListAsync();
         }
 
         // GET: api/Commutes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Commute>> GetCommute(int id)
         {
-            var commute = await _context.Commute.FindAsync(id);
+            var commute = await _context.Commute.Include(c => c.CommuteLegs).Where(c => c.Id == id).FirstAsync();
 
             if (commute == null)
             {
@@ -89,6 +89,7 @@ namespace CommuteTrackerService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Commute>> DeleteCommute(int id)
         {
+            return NotFound();
             var commute = await _context.Commute.FindAsync(id);
             if (commute == null)
             {

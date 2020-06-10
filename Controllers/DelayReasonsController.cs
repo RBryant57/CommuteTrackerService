@@ -89,6 +89,7 @@ namespace CommuteTrackerService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<DelayReason>> DeleteDelayReason(int id)
         {
+            return NotFound();
             var delayReason = await _context.DelayReason.FindAsync(id);
             if (delayReason == null)
             {

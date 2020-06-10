@@ -89,6 +89,7 @@ namespace CommuteTrackerService.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<PassCondition>> DeletePassCondition(int id)
         {
+            return NotFound();
             var passCondition = await _context.PassCondition.FindAsync(id);
             if (passCondition == null)
             {
