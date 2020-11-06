@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using CommuteTrackerService.Models;
+
+using DataLayer.Data;
+using DataLayer.Interfaces;
+using EntityLayer.Contexts;
+using EntityLayer.Interfaces;
+using EntityLayer.Models;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,61 +15,56 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class RouteTypesController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private IData _data;
 
         public RouteTypesController(CommuteTrackerContext context)
         {
-            _context = context;
+            _data = new RouteTypeData(context);
         }
 
         // GET: api/RouteTypes
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RouteType>>> GetRouteType()
+        public async Task<ActionResult<IEnumerable<IEntity>>> GetRouteType()
         {
-            return await _context.RouteType.ToListAsync();
+            var entities = await _data.Get();
+            var returnEntities = new List<RouteType>();
+            entities.ForEach(delegate (IEntity entity) { returnEntities.Add((RouteType)entity); });
+
+            return returnEntities;
         }
 
         // GET: api/RouteTypes/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RouteType>> GetRouteType(int id)
+        public async Task<ActionResult<IEntity>> GetRouteType(int id)
         {
-            var routeType = await _context.RouteType.FindAsync(id);
+            var entity = await _data.Get(id);
 
-            if (routeType == null)
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            return routeType;
+            return (RouteType)entity;
         }
 
         // PUT: api/RouteTypes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutRouteType(int id, RouteType routeType)
+        public async Task<IActionResult> PutRouteType(int id, RouteType entity)
         {
-            if (id != routeType.Id)
+            if (id != entity.Id)
             {
-                return BadRequest();
+                return BadRequest("Route type id does not match route type to be updated.");
             }
-
-            _context.Entry(routeType).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _data.Update(id, entity);
             }
-            catch (DbUpdateConcurrencyException)
+            catch (ArgumentException)
             {
-                if (!RouteTypeExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return NotFound();
             }
 
             return NoContent();
@@ -77,34 +74,29 @@ namespace CommuteTrackerService.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<RouteType>> PostRouteType(RouteType routeType)
+        public async Task<ActionResult<IEntity>> PostRouteType(RouteType entity)
         {
-            _context.RouteType.Add(routeType);
-            await _context.SaveChangesAsync();
+            var newEntity = await _data.Add(entity);
 
-            return CreatedAtAction("GetRouteType", new { id = routeType.Id }, routeType);
+            return CreatedAtAction("GetRouteType", new { id = newEntity.Id }, newEntity);
         }
 
         // DELETE: api/RouteTypes/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<RouteType>> DeleteRouteType(int id)
+        public async Task<ActionResult<IEntity>> DeleteRouteType(int id)
         {
             return NotFound();
-            var routeType = await _context.RouteType.FindAsync(id);
-            if (routeType == null)
+
+            // Deleting will be implemented later.
+            var entity = await _data.Get(id);
+            if (entity == null)
             {
                 return NotFound();
             }
 
-            _context.RouteType.Remove(routeType);
-            await _context.SaveChangesAsync();
+            await _data.Delete(entity.Id);
 
-            return routeType;
-        }
-
-        private bool RouteTypeExists(int id)
-        {
-            return _context.RouteType.Any(e => e.Id == id);
+            return (RouteType)entity;
         }
     }
 }

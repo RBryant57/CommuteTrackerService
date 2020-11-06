@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace CommuteTrackerService.Models
+using EntityLayer.Interfaces;
+
+namespace EntityLayer.Models
 {
-    public class PassCondition
+    public class PassCondition : IEntity
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }

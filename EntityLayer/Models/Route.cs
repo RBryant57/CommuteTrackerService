@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using EntityLayer.Interfaces;
 
-namespace CommuteTrackerService.Models
+namespace EntityLayer.Models
 {
-    public class Route
+    public class Route : IEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
