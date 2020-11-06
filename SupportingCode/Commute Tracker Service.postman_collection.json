@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "a788c5d3-7e04-4cea-80f8-63668750220d",
-		"name": "Commute Tracker Service",
+		"_postman_id": "20a5d06b-81a9-4480-9df8-9221861f034b",
+		"name": "Commute Tracker Service Dev",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,14 +11,13 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9000/CommuteTrackerService/api/routes",
-					"protocol": "http",
+					"raw": "https://localhost:5001/api/routes",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "9000",
+					"port": "5001",
 					"path": [
-						"CommuteTrackerService",
 						"api",
 						"routes"
 					]
@@ -27,42 +26,381 @@
 			"response": []
 		},
 		{
-			"name": "GET Commute Legs",
+			"name": "PUT Routes",
 			"request": {
-				"method": "GET",
+				"method": "PUT",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"Kent - SE 8th and 405\",\r\n    \"routeTypeId\": 1,\r\n    \"number\": \"0\",\r\n    \"miles\": 22,\r\n    \"notes\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:9000/CommuteTrackerService/api/commutelegs",
-					"protocol": "http",
+					"raw": "https://localhost:5001/api/routes/3",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "9000",
+					"port": "5001",
 					"path": [
-						"CommuteTrackerService",
 						"api",
-						"commutelegs"
+						"routes",
+						"3"
 					]
 				}
 			},
 			"response": []
 		},
 		{
-			"name": "GET Commutes",
+			"name": "POST Routes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Kent - SE 8th and I5\",\r\n    \"routeTypeId\": 1,\r\n    \"number\": \"0\",\r\n    \"miles\": 21,\r\n    \"notes\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/routes/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"routes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Route Types",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:9000/CommuteTrackerService/api/commutes",
-					"protocol": "http",
+					"raw": "https://localhost:5001/api/routetypes/",
+					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "9000",
+					"port": "5001",
 					"path": [
-						"CommuteTrackerService",
 						"api",
-						"commutes"
+						"routetypes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Route Types",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 4,\r\n    \"name\": \"Airline\",\r\n    \"notes\": \"Flying\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/routetypes/4",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"routetypes",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Route Types",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Magic Carpet\",\r\n    \"notes\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/routetypes/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"routetypes",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Pass Conditions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/passconditions",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"passconditions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Pass Conditions",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 2,\r\n    \"date\": \"2015-01-04T12:00:00\",\r\n    \"minutes\": 95,\r\n    \"usualMinutes\": 78,\r\n    \"routeId\": 52,\r\n    \"delayReasonId\": 9,\r\n    \"notes\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/passconditions/2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"passconditions",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Pass Conditions",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"date\": \"2015-01-04T12:00:00\",\r\n    \"minutes\": 95,\r\n    \"usualMinutes\": 78,\r\n    \"routeId\": 52,\r\n    \"delayReasonId\": 9,\r\n    \"notes\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/passconditions/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"passconditions",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Fare Classes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/fareclasses",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"fareclasses"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Fare Classes",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"E\",\r\n    \"notes\": \"Economy. Crappy seats. Really crappy.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/fareclasses/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"fareclasses",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Fare Classes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Crapp\",\r\n    \"notes\": \"Economy. Crappy seats.\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/fareclasses/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"fareclasses",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Destination",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:5001/api/destinations",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"destinations"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Destinations",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 3,\r\n    \"name\": \"Lisa's Place\",\r\n    \"notes\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/destinations/3",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"destinations",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST Destinations",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Weed store\",\r\n    \"notes\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:5001/api/destinations/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "5001",
+					"path": [
+						"api",
+						"destinations",
+						""
 					]
 				}
 			},
