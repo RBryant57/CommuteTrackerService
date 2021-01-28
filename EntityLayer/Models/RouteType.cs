@@ -1,4 +1,5 @@
-﻿using EntityLayer.Interfaces;
+﻿using System.Collections.Generic;
+using EntityLayer.Interfaces;
 
 namespace EntityLayer.Models
 {

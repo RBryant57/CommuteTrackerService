@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 using EntityLayer.Interfaces;
 
@@ -14,6 +15,8 @@ namespace EntityLayer.Models
         public int DelaySeconds { get; set; }
         public List<CommuteLeg> CommuteLegs { get; set; }
         public string Notes { get; set; }
+        [ForeignKey("DestinationId")]
+        public Destination Destination { get; set; }
 
         public Commute()
         {

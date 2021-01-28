@@ -24,12 +24,12 @@ namespace DataLayer.Data
         public async Task<List<IEntity>> Get()
         {
             var returnModels = new List<IEntity>();
-            return await _context.Commute.Include(c => c.CommuteLegs).ToListAsync<IEntity>();
+            return await _context.Commute.Include(c => c.CommuteLegs).Include(d => d.Destination).ToListAsync<IEntity>();
         }
 
         public async Task<IEntity> Get(int id)
         {
-            return await _context.Commute.Include(c => c.CommuteLegs).Where(i => i.Id == id).FirstOrDefaultAsync<IEntity>();
+            return await _context.Commute.Include(c => c.CommuteLegs).Include(d => d.Destination).Where(i => i.Id == id).FirstOrDefaultAsync<IEntity>();
         }
 
         public async Task<bool> Update(int id, IEntity entity)
