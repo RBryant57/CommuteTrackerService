@@ -32,6 +32,12 @@ namespace DataLayer.Data
             return await _context.Commute.Include(c => c.CommuteLegs).Include(d => d.Destination).Where(i => i.Id == id).FirstOrDefaultAsync<IEntity>();
         }
 
+        public async Task<List<IEntity>> GetOpenCommutes()
+        {
+            var returnModels = new List<IEntity>();
+            return await _context.Commute.Where(o => o.EndTime == null).ToListAsync<IEntity>();
+        }
+
         public async Task<bool> Update(int id, IEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;

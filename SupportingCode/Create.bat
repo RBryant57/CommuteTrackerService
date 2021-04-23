@@ -16,3 +16,4 @@ dotnet aspnet-codegenerator controller -name RoutesController -async -api -m Rou
 dotnet aspnet-codegenerator controller -name RouteTypesController -async -api -m RouteType -dc CommuteTrackerContext -outDir Controllers
 
 dotnet publish -o D:\Webs\YCDServices\CommuteTrackerService
+dotnet pack -p:PackageVersion=1.2.0

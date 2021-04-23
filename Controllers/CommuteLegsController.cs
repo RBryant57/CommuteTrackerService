@@ -47,6 +47,14 @@ namespace CommuteTrackerService.Controllers
             return (CommuteLeg)entity;
         }
 
+        // GET: api/GetTotalDelay
+        [HttpGet]
+        [Route("[action]/{id}")]
+        public async Task<ActionResult<int>> GetTotalDelay(int id)
+        {
+            return await ((CommuteLegData)_data).GetTotalDelay(id);
+        }
+
         // PUT: api/CommuteLegs/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.

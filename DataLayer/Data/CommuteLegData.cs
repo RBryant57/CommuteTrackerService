@@ -31,6 +31,12 @@ namespace DataLayer.Data
             return await _context.CommuteLeg.Include(d => d.Destination).Include(dr => dr.DelayReason).Include(f => f.FareClass).Include(r => r.Route).Include(c => c.Commute).Where(cl => cl.Id == id).FirstOrDefaultAsync<IEntity>();
         }
 
+        public async Task<int> GetTotalDelay(int id)
+        {
+            var commuteLegs = await _context.CommuteLeg.Where(c => c.CommuteId == id).ToListAsync<CommuteLeg>();
+            return commuteLegs.Sum(c => c.DelaySeconds);
+        }
+
         public async Task<bool> Update(int id, IEntity entity)
         {
             _context.Entry(entity).State = EntityState.Modified;

@@ -11,9 +11,9 @@ namespace CommuteTrackerServiceTests
         protected readonly CommuteTrackerContext context;
         public AbstractControllerTest()
         {
-            var options = new DbContextOptionsBuilder<CommuteTrackerContext>()
-                .UseInMemoryDatabase("CommuteTrackerContext", new InMemoryDatabaseRoot())
-                .Options;
+            // var options = new DbContextOptionsBuilder<CommuteTrackerContext>()
+            //     .UseInMemoryDatabase("CommuteTrackerContext", new InMemoryDatabaseRoot())
+            //     .Options;
 
             //context = new CommuteTrackerContext(options);
         }

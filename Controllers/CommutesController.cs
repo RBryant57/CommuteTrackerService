@@ -47,6 +47,18 @@ namespace CommuteTrackerService.Controllers
             return (Commute)entity;
         }
 
+        // GET: api/GetOpenCommutes
+        [HttpGet]
+        [Route("[action]")]
+        public async Task<ActionResult<IEnumerable<IEntity>>> GetOpenCommutes()
+        {
+            var entities = await ((CommuteData)_data).GetOpenCommutes();
+            var returnEntities = new List<Commute>();
+            entities.ForEach(delegate (IEntity entity) { returnEntities.Add((Commute)entity); });
+
+            return returnEntities;
+        }
+
         // PUT: api/Commutes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
