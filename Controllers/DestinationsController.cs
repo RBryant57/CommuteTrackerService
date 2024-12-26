@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using CommuteTrackerService.Models;
+using CommuteTrackerService.Data;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,9 +13,9 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class DestinationsController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private readonly GeneralContext _context;
 
-        public DestinationsController(CommuteTrackerContext context)
+        public DestinationsController(GeneralContext context)
         {
             _context = context;
         }
@@ -24,14 +24,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Destination>>> GetDestination()
         {
-            return await _context.Destination.ToListAsync();
+            return await _context.Destinations.ToListAsync();
         }
 
         // GET: api/Destinations/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Destination>> GetDestination(int id)
         {
-            var destination = await _context.Destination.FindAsync(id);
+            var destination = await _context.Destinations.FindAsync(id);
 
             if (destination == null)
             {
@@ -79,7 +79,7 @@ namespace CommuteTrackerService.Controllers
         [HttpPost]
         public async Task<ActionResult<Destination>> PostDestination(Destination destination)
         {
-            _context.Destination.Add(destination);
+            _context.Destinations.Add(destination);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDestination", new { id = destination.Id }, destination);
@@ -90,13 +90,13 @@ namespace CommuteTrackerService.Controllers
         public async Task<ActionResult<Destination>> DeleteDestination(int id)
         {
             return NotFound();
-            var destination = await _context.Destination.FindAsync(id);
+            var destination = await _context.Destinations.FindAsync(id);
             if (destination == null)
             {
                 return NotFound();
             }
 
-            _context.Destination.Remove(destination);
+            _context.Destinations.Remove(destination);
             await _context.SaveChangesAsync();
 
             return destination;
@@ -104,7 +104,7 @@ namespace CommuteTrackerService.Controllers
 
         private bool DestinationExists(int id)
         {
-            return _context.Destination.Any(e => e.Id == id);
+            return _context.Destinations.Any(e => e.Id == id);
         }
     }
 }

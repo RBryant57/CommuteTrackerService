@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using CommuteTrackerService.Models;
+using CommuteTrackerService.Data;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,9 +13,9 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class RouteTypesController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private readonly GeneralContext _context;
 
-        public RouteTypesController(CommuteTrackerContext context)
+        public RouteTypesController(GeneralContext context)
         {
             _context = context;
         }
@@ -24,14 +24,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<RouteType>>> GetRouteType()
         {
-            return await _context.RouteType.ToListAsync();
+            return await _context.RouteTypes.ToListAsync();
         }
 
         // GET: api/RouteTypes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<RouteType>> GetRouteType(int id)
         {
-            var routeType = await _context.RouteType.FindAsync(id);
+            var routeType = await _context.RouteTypes.FindAsync(id);
 
             if (routeType == null)
             {
@@ -79,7 +79,7 @@ namespace CommuteTrackerService.Controllers
         [HttpPost]
         public async Task<ActionResult<RouteType>> PostRouteType(RouteType routeType)
         {
-            _context.RouteType.Add(routeType);
+            _context.RouteTypes.Add(routeType);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetRouteType", new { id = routeType.Id }, routeType);
@@ -90,13 +90,13 @@ namespace CommuteTrackerService.Controllers
         public async Task<ActionResult<RouteType>> DeleteRouteType(int id)
         {
             return NotFound();
-            var routeType = await _context.RouteType.FindAsync(id);
+            var routeType = await _context.RouteTypes.FindAsync(id);
             if (routeType == null)
             {
                 return NotFound();
             }
 
-            _context.RouteType.Remove(routeType);
+            _context.RouteTypes.Remove(routeType);
             await _context.SaveChangesAsync();
 
             return routeType;
@@ -104,7 +104,7 @@ namespace CommuteTrackerService.Controllers
 
         private bool RouteTypeExists(int id)
         {
-            return _context.RouteType.Any(e => e.Id == id);
+            return _context.RouteTypes.Any(e => e.Id == id);
         }
     }
 }

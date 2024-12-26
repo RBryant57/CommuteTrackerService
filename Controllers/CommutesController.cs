@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using CommuteTrackerService.Models;
+using CommuteTrackerService.Data;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,9 +13,9 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class CommutesController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private readonly GeneralContext _context;
 
-        public CommutesController(CommuteTrackerContext context)
+        public CommutesController(GeneralContext context)
         {
             _context = context;
         }
@@ -24,14 +24,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Commute>>> GetCommute()
         {
-            return await _context.Commute.Include(c => c.CommuteLegs).ToListAsync();
+            return await _context.Commutes.Include(c => c.CommuteLegs).ToListAsync();
         }
 
         // GET: api/Commutes/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Commute>> GetCommute(int id)
         {
-            var commute = await _context.Commute.Include(c => c.CommuteLegs).Where(c => c.Id == id).FirstAsync();
+            var commute = await _context.Commutes.Include(c => c.CommuteLegs).Where(c => c.Id == id).FirstAsync();
 
             if (commute == null)
             {
@@ -79,7 +79,7 @@ namespace CommuteTrackerService.Controllers
         [HttpPost]
         public async Task<ActionResult<Commute>> PostCommute(Commute commute)
         {
-            _context.Commute.Add(commute);
+            _context.Commutes.Add(commute);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCommute", new { id = commute.Id }, commute);
@@ -90,13 +90,13 @@ namespace CommuteTrackerService.Controllers
         public async Task<ActionResult<Commute>> DeleteCommute(int id)
         {
             return NotFound();
-            var commute = await _context.Commute.FindAsync(id);
+            var commute = await _context.Commutes.FindAsync(id);
             if (commute == null)
             {
                 return NotFound();
             }
 
-            _context.Commute.Remove(commute);
+            _context.Commutes.Remove(commute);
             await _context.SaveChangesAsync();
 
             return commute;
@@ -104,7 +104,7 @@ namespace CommuteTrackerService.Controllers
 
         private bool CommuteExists(int id)
         {
-            return _context.Commute.Any(e => e.Id == id);
+            return _context.Commutes.Any(e => e.Id == id);
         }
     }
 }

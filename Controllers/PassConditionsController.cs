@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using CommuteTrackerService.Models;
+using CommuteTrackerService.Data;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,9 +13,9 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class PassConditionsController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private readonly GeneralContext _context;
 
-        public PassConditionsController(CommuteTrackerContext context)
+        public PassConditionsController(GeneralContext context)
         {
             _context = context;
         }
@@ -24,14 +24,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PassCondition>>> GetPassCondition()
         {
-            return await _context.PassCondition.ToListAsync();
+            return await _context.PassConditions.ToListAsync();
         }
 
         // GET: api/PassConditions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<PassCondition>> GetPassCondition(int id)
         {
-            var passCondition = await _context.PassCondition.FindAsync(id);
+            var passCondition = await _context.PassConditions.FindAsync(id);
 
             if (passCondition == null)
             {
@@ -79,7 +79,7 @@ namespace CommuteTrackerService.Controllers
         [HttpPost]
         public async Task<ActionResult<PassCondition>> PostPassCondition(PassCondition passCondition)
         {
-            _context.PassCondition.Add(passCondition);
+            _context.PassConditions.Add(passCondition);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetPassCondition", new { id = passCondition.Id }, passCondition);
@@ -90,13 +90,13 @@ namespace CommuteTrackerService.Controllers
         public async Task<ActionResult<PassCondition>> DeletePassCondition(int id)
         {
             return NotFound();
-            var passCondition = await _context.PassCondition.FindAsync(id);
+            var passCondition = await _context.PassConditions.FindAsync(id);
             if (passCondition == null)
             {
                 return NotFound();
             }
 
-            _context.PassCondition.Remove(passCondition);
+            _context.PassConditions.Remove(passCondition);
             await _context.SaveChangesAsync();
 
             return passCondition;
@@ -104,7 +104,7 @@ namespace CommuteTrackerService.Controllers
 
         private bool PassConditionExists(int id)
         {
-            return _context.PassCondition.Any(e => e.Id == id);
+            return _context.PassConditions.Any(e => e.Id == id);
         }
     }
 }

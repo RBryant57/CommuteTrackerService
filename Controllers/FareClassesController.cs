@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using CommuteTrackerService.Models;
+using CommuteTrackerService.Data;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,9 +13,9 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class FareClassesController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private readonly GeneralContext _context;
 
-        public FareClassesController(CommuteTrackerContext context)
+        public FareClassesController(GeneralContext context)
         {
             _context = context;
         }
@@ -24,14 +24,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<FareClass>>> GetFareClass()
         {
-            return await _context.FareClass.ToListAsync();
+            return await _context.FareClasses.ToListAsync();
         }
 
         // GET: api/FareClasses/5
         [HttpGet("{id}")]
         public async Task<ActionResult<FareClass>> GetFareClass(int id)
         {
-            var fareClass = await _context.FareClass.FindAsync(id);
+            var fareClass = await _context.FareClasses.FindAsync(id);
 
             if (fareClass == null)
             {
@@ -79,7 +79,7 @@ namespace CommuteTrackerService.Controllers
         [HttpPost]
         public async Task<ActionResult<FareClass>> PostFareClass(FareClass fareClass)
         {
-            _context.FareClass.Add(fareClass);
+            _context.FareClasses.Add(fareClass);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetFareClass", new { id = fareClass.Id }, fareClass);
@@ -90,13 +90,13 @@ namespace CommuteTrackerService.Controllers
         public async Task<ActionResult<FareClass>> DeleteFareClass(int id)
         {
             return NotFound();
-            var fareClass = await _context.FareClass.FindAsync(id);
+            var fareClass = await _context.FareClasses.FindAsync(id);
             if (fareClass == null)
             {
                 return NotFound();
             }
 
-            _context.FareClass.Remove(fareClass);
+            _context.FareClasses.Remove(fareClass);
             await _context.SaveChangesAsync();
 
             return fareClass;
@@ -104,7 +104,7 @@ namespace CommuteTrackerService.Controllers
 
         private bool FareClassExists(int id)
         {
-            return _context.FareClass.Any(e => e.Id == id);
+            return _context.FareClasses.Any(e => e.Id == id);
         }
     }
 }

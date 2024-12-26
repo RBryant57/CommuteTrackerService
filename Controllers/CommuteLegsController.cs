@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using CommuteTrackerService.Models;
+using CommuteTrackerService.Data;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,9 +14,9 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class CommuteLegsController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private readonly GeneralContext _context;
 
-        public CommuteLegsController(CommuteTrackerContext context)
+        public CommuteLegsController(GeneralContext context)
         {
             _context = context;
         }
@@ -24,14 +25,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<CommuteLeg>>> GetCommuteLeg()
         {
-            return await _context.CommuteLeg.ToListAsync();
+            return await _context.CommuteLegs.ToListAsync();
         }
 
         // GET: api/CommuteLegs/5
         [HttpGet("{id}")]
         public async Task<ActionResult<CommuteLeg>> GetCommuteLeg(int id)
         {
-            var commuteLeg = await _context.CommuteLeg.FindAsync(id);
+            var commuteLeg = await _context.CommuteLegs.FindAsync(id);
 
             if (commuteLeg == null)
             {
@@ -79,7 +80,7 @@ namespace CommuteTrackerService.Controllers
         [HttpPost]
         public async Task<ActionResult<CommuteLeg>> PostCommuteLeg(CommuteLeg commuteLeg)
         {
-            _context.CommuteLeg.Add(commuteLeg);
+            _context.CommuteLegs.Add(commuteLeg);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetCommuteLeg", new { id = commuteLeg.Id }, commuteLeg);
@@ -90,13 +91,13 @@ namespace CommuteTrackerService.Controllers
         public async Task<ActionResult<CommuteLeg>> DeleteCommuteLeg(int id)
         {
             return NotFound();
-            var commuteLeg = await _context.CommuteLeg.FindAsync(id);
+            var commuteLeg = await _context.CommuteLegs.FindAsync(id);
             if (commuteLeg == null)
             {
                 return NotFound();
             }
 
-            _context.CommuteLeg.Remove(commuteLeg);
+            _context.CommuteLegs.Remove(commuteLeg);
             await _context.SaveChangesAsync();
 
             return commuteLeg;
@@ -104,7 +105,7 @@ namespace CommuteTrackerService.Controllers
 
         private bool CommuteLegExists(int id)
         {
-            return _context.CommuteLeg.Any(e => e.Id == id);
+            return _context.CommuteLegs.Any(e => e.Id == id);
         }
     }
 }

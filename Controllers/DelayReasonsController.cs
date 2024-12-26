@@ -1,11 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 using CommuteTrackerService.Models;
+using CommuteTrackerService.Data;
 
 namespace CommuteTrackerService.Controllers
 {
@@ -13,9 +13,9 @@ namespace CommuteTrackerService.Controllers
     [ApiController]
     public class DelayReasonsController : ControllerBase
     {
-        private readonly CommuteTrackerContext _context;
+        private readonly GeneralContext _context;
 
-        public DelayReasonsController(CommuteTrackerContext context)
+        public DelayReasonsController(GeneralContext context)
         {
             _context = context;
         }
@@ -24,14 +24,14 @@ namespace CommuteTrackerService.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<DelayReason>>> GetDelayReason()
         {
-            return await _context.DelayReason.ToListAsync();
+            return await _context.DelayReasons.ToListAsync();
         }
 
         // GET: api/DelayReasons/5
         [HttpGet("{id}")]
         public async Task<ActionResult<DelayReason>> GetDelayReason(int id)
         {
-            var delayReason = await _context.DelayReason.FindAsync(id);
+            var delayReason = await _context.DelayReasons.FindAsync(id);
 
             if (delayReason == null)
             {
@@ -79,7 +79,7 @@ namespace CommuteTrackerService.Controllers
         [HttpPost]
         public async Task<ActionResult<DelayReason>> PostDelayReason(DelayReason delayReason)
         {
-            _context.DelayReason.Add(delayReason);
+            _context.DelayReasons.Add(delayReason);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetDelayReason", new { id = delayReason.Id }, delayReason);
@@ -90,13 +90,13 @@ namespace CommuteTrackerService.Controllers
         public async Task<ActionResult<DelayReason>> DeleteDelayReason(int id)
         {
             return NotFound();
-            var delayReason = await _context.DelayReason.FindAsync(id);
+            var delayReason = await _context.DelayReasons.FindAsync(id);
             if (delayReason == null)
             {
                 return NotFound();
             }
 
-            _context.DelayReason.Remove(delayReason);
+            _context.DelayReasons.Remove(delayReason);
             await _context.SaveChangesAsync();
 
             return delayReason;
@@ -104,7 +104,7 @@ namespace CommuteTrackerService.Controllers
 
         private bool DelayReasonExists(int id)
         {
-            return _context.DelayReason.Any(e => e.Id == id);
+            return _context.DelayReasons.Any(e => e.Id == id);
         }
     }
 }

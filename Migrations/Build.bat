@@ -1,0 +1,1 @@
+dotnet ef dbcontext scaffold "Server=tcp:commutetracker.database.windows.net,1433;Initial Catalog=General;Persist Security Info=False;User ID=rwb;Password=zMfMBD4^#qPILNWM;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;" Microsoft.EntityFrameworkCore.SqlServer --context-dir Data --output-dir Models --force
